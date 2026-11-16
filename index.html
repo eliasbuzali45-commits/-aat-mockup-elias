@@ -257,6 +257,13 @@
   .btn-plan:hover {
     background-color: var(--azul-oscuro);
   }
+    html {
+    scroll-behavior: smooth;
+  }
+
+  section, footer {
+    scroll-margin-top: 80px;
+  }
   @media (max-width: 768px) {
     nav {
       flex-direction: column;
@@ -268,7 +275,11 @@
     }
     .hero h1 {
       font-size: 2rem;
+          section, footer {
+      scroll-margin-top: 130px;
     }
+    } 
+    
   }
 </style>
 </head>
