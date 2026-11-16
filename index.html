@@ -6,7 +6,7 @@
 <title>LinoExpress | Lavado de manteles y servilletas para restaurantes</title>
 <style>
   :root {
-    --azul-oscuro: #0B3D57;
+    --azul-oscuro: #0B3D57; 
     --azul-medio: #1B6B8C;
     --celeste: #6FB7C9;
     --blanco: #FFFFFF;
@@ -326,7 +326,25 @@
     return { piezasMes, subtotal, porcentaje, descuento, recoleccion, total };
   }
 
+    // Número de WhatsApp del negocio (con código de país, sin + ni espacios)
+  const WHATSAPP_NUMERO = '525574872418';
+
+  function armarLinkWhatsApp(restaurante, manteles, servilletas, frecuencia, r) {
+    const nombre = restaurante.trim() || '(sin nombre)';
+    const mensaje =
+      'Hola, quiero solicitar este servicio de lavado:\n' +
+      'Restaurante: ' + nombre + '\n' +
+      'Manteles por semana: ' + manteles + '\n' +
+      'Servilletas por semana: ' + servilletas + '\n' +
+      'Recolecciones por semana: ' + frecuencia + '\n' +
+      'Piezas al mes: ' + r.piezasMes + '\n' +
+      'Descuento aplicado: ' + r.porcentaje + '%\n' +
+      'Total mensual estimado: ' + formatoMoneda(r.total);
+    return 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + encodeURIComponent(mensaje);
+  }
+
   document.getElementById('btn-cotizar').addEventListener('click', function () {
+    const restaurante = document.getElementById('restaurante').value;
     const manteles = parseInt(document.getElementById('manteles').value, 10) || 0;
     const servilletas = parseInt(document.getElementById('servilletas').value, 10) || 0;
     const frecuencia = parseInt(document.getElementById('frecuencia').value, 10);
@@ -339,6 +357,7 @@
     }
 
     const r = calcularCotizacion(manteles, servilletas, frecuencia);
+    const link = armarLinkWhatsApp(restaurante, manteles, servilletas, frecuencia, r);
 
     contenedor.innerHTML =
       '<p><strong>Piezas al mes:</strong> ' + r.piezasMes + '</p>' +
@@ -346,7 +365,9 @@
       '<p><strong>Descuento (' + r.porcentaje + '%):</strong> -' + formatoMoneda(r.descuento) + '</p>' +
       '<p><strong>Recolección:</strong> ' + formatoMoneda(r.recoleccion) + '</p>' +
       '<p style="font-size:1.2rem;color:#0B3D57;margin-top:0.6rem;"><strong>Total mensual estimado: ' +
-      formatoMoneda(r.total) + '</strong></p>';
+      formatoMoneda(r.total) + '</strong></p>' +
+      '<a href="' + link + '" target="_blank" rel="noopener" class="btn-primary" ' +
+      'style="display:block;text-align:center;margin-top:1.2rem;">Enviar cotización por WhatsApp</a>';
   });
 </script>
 </body>
