@@ -241,6 +241,22 @@
     transform: translateY(-3px);
     background-color: rgba(255,255,255,0.12);
   }
+    .btn-plan {
+    display: inline-block;
+    margin-top: 1.2rem;
+    padding: 0.6rem 1.4rem;
+    background-color: var(--azul-medio);
+    color: var(--blanco);
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-plan:hover {
+    background-color: var(--azul-oscuro);
+  }
   @media (max-width: 768px) {
     nav {
       flex-direction: column;
@@ -279,21 +295,23 @@
 
 <section class="servicios" id="servicios">
   <h2>Nuestros Servicios</h2>
-  <div class="cards">
-    <div class="card">
+      <div class="card">
       <h3>Plan Básico</h3>
       <span class="dato">Desde $8 MXN / pieza</span>
       <p>Recolección y entrega semanal para restaurantes pequeños, con conteo digital de piezas en cada visita.</p>
+      <a href="#cotizador" class="btn-plan" data-frecuencia="1">Cotizar este plan</a>
     </div>
     <div class="card">
       <h3>Plan Ruta Fija</h3>
       <span class="dato">Recolección 3 veces/semana</span>
       <p>Ideal para negocios con alto volumen. Incluye reporte de inventario en tiempo real desde tu panel.</p>
+      <a href="#cotizador" class="btn-plan" data-frecuencia="3">Cotizar este plan</a>
     </div>
     <div class="card">
       <h3>Plan Multi-Sucursal</h3>
       <span class="dato">Facturación consolidada</span>
       <p>Coordina varias sucursales desde una sola cuenta, con pagos en línea y estatus por ubicación.</p>
+      <a href="#cotizador" class="btn-plan">Cotizar este plan</a>
     </div>
   </div>
 </section>
@@ -431,6 +449,15 @@
       formatoMoneda(r.total) + '</strong></p>' +
       '<a href="' + link + '" target="_blank" rel="noopener" class="btn-primary" ' +
       'style="display:block;text-align:center;margin-top:1.2rem;">Enviar cotización por WhatsApp</a>';
+  });
+    // Botones "Cotizar este plan": preseleccionan la frecuencia de recolección
+  document.querySelectorAll('.btn-plan').forEach(function (boton) {
+    boton.addEventListener('click', function () {
+      const frecuencia = boton.getAttribute('data-frecuencia');
+      if (frecuencia) {
+        document.getElementById('frecuencia').value = frecuencia;
+      }
+    });
   });
 </script>
 </body>
