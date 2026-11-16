@@ -164,7 +164,31 @@
     padding: 1.8rem 1rem;
     font-size: 0.9rem;
   }
+<section class="cotizador" id="cotizador">
+  <h2>Cotiza tu servicio</h2>
+  <p class="subtitulo">Dinos cuántas piezas manejas y te damos una cotización mensual estimada.</p>
 
+  <div class="form-cotizador">
+    <label for="restaurante">Nombre del restaurante</label>
+    <input type="text" id="restaurante" placeholder="Ej. Taquería El Buen Sabor">
+
+    <label for="manteles">Manteles por semana</label>
+    <input type="number" id="manteles" min="0" value="0">
+
+    <label for="servilletas">Servilletas por semana</label>
+    <input type="number" id="servilletas" min="0" value="0">
+
+    <label for="frecuencia">Recolecciones por semana</label>
+    <select id="frecuencia">
+      <option value="1">1 vez por semana</option>
+      <option value="3">3 veces por semana</option>
+    </select>
+
+    <button type="button" id="btn-cotizar" class="btn-primary">Calcular cotización</button>
+
+    <div id="resultado"></div>
+  </div>
+</section>
   @media (max-width: 768px) {
     nav {
       flex-direction: column;
@@ -217,7 +241,31 @@
     </div>
   </div>
 </section>
+<section class="cotizador" id="cotizador">
+  <h2>Cotiza tu servicio</h2>
+  <p class="subtitulo">Dinos cuántas piezas manejas y te damos una cotización mensual estimada.</p>
 
+  <div class="form-cotizador">
+    <label for="restaurante">Nombre del restaurante</label>
+    <input type="text" id="restaurante" placeholder="Ej. Taquería El Buen Sabor">
+
+    <label for="manteles">Manteles por semana</label>
+    <input type="number" id="manteles" min="0" value="0">
+
+    <label for="servilletas">Servilletas por semana</label>
+    <input type="number" id="servilletas" min="0" value="0">
+
+    <label for="frecuencia">Recolecciones por semana</label>
+    <select id="frecuencia">
+      <option value="1">1 vez por semana</option>
+      <option value="3">3 veces por semana</option>
+    </select>
+
+    <button type="button" id="btn-cotizar" class="btn-primary">Calcular cotización</button>
+
+    <div id="resultado"></div>
+  </div>
+</section>
 <footer id="contacto">
   <p>&copy; 2026 LinoExpress. Todos los derechos reservados.</p>
 </footer>
