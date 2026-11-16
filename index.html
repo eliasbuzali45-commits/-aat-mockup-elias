@@ -269,6 +269,85 @@
 <footer id="contacto">
   <p>&copy; 2026 LinoExpress. Todos los derechos reservados.</p>
 </footer>
+<script>
+  // ============================================================
+  // CONFIGURACIÓN: AQUÍ CAMBIAS TUS PRECIOS Y DESCUENTOS
+  // Los valores de abajo son PROVISIONALES, solo para probar la lógica.
+  // ============================================================
+  const CONFIG = {
+    precioManteles: 8,        // MXN por mantel (PROVISIONAL)
+    precioServilletas: 8,     // MXN por servilleta (PROVISIONAL)
+    semanasPorMes: 4,
 
+    // Costo por cada recolección, según cuántas hay por semana (PROVISIONAL)
+    costoRecoleccion: { 1: 0, 3: 0 },
+
+    // Descuento por volumen según piezas al mes (PROVISIONAL: todos en 0%)
+    descuentos: [
+      { desdePiezas: 0,   porcentaje: 0 },
+      { desdePiezas: 200, porcentaje: 0 },
+      { desdePiezas: 500, porcentaje: 0 }
+    ]
+  };
+
+  // ============================================================
+  // LÓGICA DEL COTIZADOR
+  // ============================================================
+  function obtenerPorcentajeDescuento(piezasMes) {
+    let porcentaje = 0;
+    for (const tramo of CONFIG.descuentos) {
+      if (piezasMes >= tramo.desdePiezas) {
+        porcentaje = tramo.porcentaje;
+      }
+    }
+    return porcentaje;
+  }
+
+  function formatoMoneda(numero) {
+    return numero.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+  }
+
+  function calcularCotizacion(manteles, servilletas, frecuencia) {
+    const piezasSemana = manteles + servilletas;
+    const piezasMes = piezasSemana * CONFIG.semanasPorMes;
+
+    const subtotal =
+      (manteles * CONFIG.precioManteles + servilletas * CONFIG.precioServilletas) *
+      CONFIG.semanasPorMes;
+
+    const porcentaje = obtenerPorcentajeDescuento(piezasMes);
+    const descuento = subtotal * (porcentaje / 100);
+
+    const recoleccion =
+      (CONFIG.costoRecoleccion[frecuencia] || 0) * frecuencia * CONFIG.semanasPorMes;
+
+    const total = subtotal - descuento + recoleccion;
+
+    return { piezasMes, subtotal, porcentaje, descuento, recoleccion, total };
+  }
+
+  document.getElementById('btn-cotizar').addEventListener('click', function () {
+    const manteles = parseInt(document.getElementById('manteles').value, 10) || 0;
+    const servilletas = parseInt(document.getElementById('servilletas').value, 10) || 0;
+    const frecuencia = parseInt(document.getElementById('frecuencia').value, 10);
+    const contenedor = document.getElementById('resultado');
+
+    if (manteles < 0 || servilletas < 0 || manteles + servilletas === 0) {
+      contenedor.innerHTML =
+        '<p style="color:#b00020;font-weight:600;">Ingresa al menos una pieza para poder cotizar.</p>';
+      return;
+    }
+
+    const r = calcularCotizacion(manteles, servilletas, frecuencia);
+
+    contenedor.innerHTML =
+      '<p><strong>Piezas al mes:</strong> ' + r.piezasMes + '</p>' +
+      '<p><strong>Subtotal:</strong> ' + formatoMoneda(r.subtotal) + '</p>' +
+      '<p><strong>Descuento (' + r.porcentaje + '%):</strong> -' + formatoMoneda(r.descuento) + '</p>' +
+      '<p><strong>Recolección:</strong> ' + formatoMoneda(r.recoleccion) + '</p>' +
+      '<p style="font-size:1.2rem;color:#0B3D57;margin-top:0.6rem;"><strong>Total mensual estimado: ' +
+      formatoMoneda(r.total) + '</strong></p>';
+  });
+</script>
 </body>
 </html>
