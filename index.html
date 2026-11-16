@@ -217,6 +217,30 @@
   .btn-whatsapp:hover {
     transform: translateY(-2px);
   }
+    .hero-botones {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-secundario {
+    display: inline-block;
+    background-color: transparent;
+    color: var(--blanco);
+    padding: 0.9rem 2.2rem;
+    border: 2px solid var(--blanco);
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .btn-secundario:hover {
+    transform: translateY(-3px);
+    background-color: rgba(255,255,255,0.12);
+  }
   @media (max-width: 768px) {
     nav {
       flex-direction: column;
@@ -237,8 +261,9 @@
 <nav>
   <div class="logo">LinoExpress</div>
   <ul class="nav-links">
-    <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#inicio">Inicio</a></li>
     <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#cotizador">Cotizador</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
 </nav>
@@ -246,7 +271,10 @@
 <section class="hero" id="inicio">
   <h1>Lavado de manteles y servilletas, sin perder el control</h1>
   <p>Restaurantes que agendan su recolección, ven el estatus de sus piezas y pagan en línea, mientras nosotros gestionamos rutas, inventario y facturación.</p>
-  <a href="#servicios" class="btn-primary">Conoce nuestros planes</a>
+   <div class="hero-botones">
+    <a href="#cotizador" class="btn-primary">Cotiza ahora</a>
+    <a href="#servicios" class="btn-secundario">Conoce nuestros planes</a>
+  </div>
 </section>
 
 <section class="servicios" id="servicios">
