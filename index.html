@@ -434,16 +434,34 @@
     return 'https://wa.me/' + WHATSAPP_NUMERO + '?text=' + encodeURIComponent(mensaje);
   }
 
+    const MAX_PIEZAS_SEMANA = 5000;
+
+  function mostrarError(contenedor, mensaje) {
+    contenedor.innerHTML =
+      '<p style="color:#b00020;font-weight:600;">' + mensaje + '</p>';
+  }
+
   document.getElementById('btn-cotizar').addEventListener('click', function () {
-    const restaurante = document.getElementById('restaurante').value;
-    const manteles = parseInt(document.getElementById('manteles').value, 10) || 0;
-    const servilletas = parseInt(document.getElementById('servilletas').value, 10) || 0;
+    const restaurante = document.getElementById('restaurante').value.trim();
+    const manteles = parseInt(document.getElementById('manteles').value, 10);
+    const servilletas = parseInt(document.getElementById('servilletas').value, 10);
     const frecuencia = parseInt(document.getElementById('frecuencia').value, 10);
     const contenedor = document.getElementById('resultado');
 
-    if (manteles < 0 || servilletas < 0 || manteles + servilletas === 0) {
-      contenedor.innerHTML =
-        '<p style="color:#b00020;font-weight:600;">Ingresa al menos una pieza para poder cotizar.</p>';
+    if (restaurante === '') {
+      mostrarError(contenedor, 'Escribe el nombre de tu restaurante.');
+      return;
+    }
+    if (isNaN(manteles) || isNaN(servilletas) || manteles < 0 || servilletas < 0) {
+      mostrarError(contenedor, 'Ingresa cantidades válidas (números de 0 en adelante).');
+      return;
+    }
+    if (manteles > MAX_PIEZAS_SEMANA || servilletas > MAX_PIEZAS_SEMANA) {
+      mostrarError(contenedor, 'Para más de ' + MAX_PIEZAS_SEMANA + ' piezas por semana, escríbenos por WhatsApp y te cotizamos directamente.');
+      return;
+    }
+    if (manteles + servilletas === 0) {
+      mostrarError(contenedor, 'Ingresa al menos una pieza para poder cotizar.');
       return;
     }
 
